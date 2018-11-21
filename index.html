@@ -6,17 +6,160 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
-        var a,b,c,d,e;
+        function sum(){
+            var basket = [];
+
+
+            // 6:5+1;7:5+2;8:4+4;9:5+4;10:5+5;
+            var a,b,c,d,e,a_list,e_list,b_list,c_list,d_list;
+            a = document.getElementById('a').value;
+            b = document.getElementById('b').value;
+            c = document.getElementById('c').value;
+            d = document.getElementById('d').value;
+            e = document.getElementById('e').value;
+
+
+            basket.push(~~a);
+            basket.push(~~b);
+            basket.push(~~c);
+            basket.push(~~d);
+            basket.push(~~e);
+            var new_bas = evlabc(basket);
         
+            new_bas=new_bas.filter(function(val){
+                return val!==0
+            })
+          
+            var value = caculate(new_bas,0);
+            document.getElementById('f').value=value;
+        }
+
+       
+        function caculate (array,currentMonney){
+            console.log(array)
+            console.log(currentMonney);
+            if(array.length===1)
+            {
+                return 8*array[0]+currentMonney;
+            }
+            else if(array.length===2)
+            {
+                return 7.6*array[0]*2 + (array[1]-array[0])*8+currentMonney;
+
+            }else if(array.length===3)
+            {
+            
+                var _caculateM = 7.2*array[0]*3;
+                array[1] = array[1] - array[0] ;
+                array[2] = array[2] - array[0] ;
+                array.shift();
+                array=array.filter(function(val){
+                    return val!==0
+                })
+                console.log(array)
+                return caculate(array,_caculateM)
+                //7.6*array[0]*2 + (array[1]-array[0])*8+currentMonney;
+            }
+            else if(array.length===4) //4+1;3+2;3+3;4+2
+            {
+                var _caculateM = 6.4*array[0]*4;
+                array[1] = array[1] - array[0] ;
+                array[2] = array[2] - array[0] ;
+                array[3] = array[3] - array[0] ;
+                array.shift();
+                array=array.filter(function(val){
+                    return val!==0
+                })
+                return caculate(array,_caculateM)
+            }
+            else if(array.length===5)//
+            {
+                if(array[0]===1)
+                {
+                    // if(array)
+                    if(array[1]===1&&array[2]>1)
+                    {
+
+                        var _caculateM = 6.4*8;
+                        //array[1] = array[1] - 1 ;
+                        array[4] = array[4] - 2 ;
+
+                        array[2] = array[2] - 2 ;
+                        array[3] = array[3] - 2 ;
+                        array.shift();
+                        array.shift();
+                        array=array.filter(function(val){
+                            return val!==0
+                        })
+                        return caculate(array,_caculateM)
+                    }
+                    else
+                    {
+                        var _caculateM = 6*array[0]*5;
+                        array[1] = array[1] - array[0] ;
+                        array[2] = array[2] - array[0] ;
+                        array[3] = array[3] - array[0] ;
+                        array[4] = array[4] - array[0] ;
+                        array.shift();
+                        array=array.filter(function(val){
+                            return val!==0
+                        })
+                        return caculate(array,_caculateM)
+
+                    }
+                }
+                else
+                {
+                    var _caculateM = 6*array[0]*5;
+                    
+                    array[1] = array[1] - array[0] +1;
+                    array[2] = array[2] - array[0] +1;
+                    array[3] = array[3] - array[0] +1;
+                    array[4] = array[4] - array[0] +1;
+                    array[0] = 1 ;
+                    array=array.filter(function(val){
+                        return val!==0
+                    })
+                    return caculate(array,_caculateM)
+                }
+                return 7.6*array[0]*2 + (array[1]-array[0])*8+currentMonney;
+            }
+            else{
+                console.log(currentMonney)
+                return currentMonney;
+            }
+        }
+       
+        function evlabc(a){//排序大小
+            var i = j = t = 0;
+            for (i = 0; i < a.length; i++){
+                for (j = 0; j < a.length; j++){
+                     if (a[i] < a[j]){
+                      t = a[i];
+                      a[i] = a[j];
+                      a[j] = t;
+                     } 
+                }
+            }
+            return a;
+        }
+
     </script>
 </head>
 
 <body>
     a:<input id="a" type="text">
+    <br>
     b:<input id="b" type="text">
-    <input id="c" type="text">
-    <input id="d" type="text">
-    <input id="e" type="text">
+    <br>
+    c:<input id="c" type="text">
+    <br>
+    d:<input id="d" type="text">
+    <br>
+    e:<input id="e" type="text">
+    <br>
+    <button onclick="sum()">提交</button>
+    <br>
     value:<input id="f" type="text">
 </body>
 </html>
